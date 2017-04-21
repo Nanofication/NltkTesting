@@ -55,19 +55,54 @@ custom_sent_tokenizer = PunktSentenceTokenizer(sample_text)
 
 tokenized = custom_sent_tokenizer.tokenize(sample_text)
 
+# def process_content():
+#     try:
+#         for i in tokenized:
+#             words = nltk.word_tokenize(i)
+#             tagged = nltk.pos_tag(words)
+#
+#             print(tagged)
+#
+#     except Exception as e:
+#         print(str(e))
+# Create tuples of each word and part of speech
+
+# After splitting by words, you then do tagging
+# Corporas are important
+
+
+
+#### CHUNKING! What's the next step to figure out the meaning of the sentence?
+# Words that modify or affect that noun
+
+# Chunks put into noun phrases. Only group things together like chunks and break out from there
+# Lets visualize
+
 def process_content():
     try:
         for i in tokenized:
             words = nltk.word_tokenize(i)
             tagged = nltk.pos_tag(words)
 
-            print(tagged)
+            chunkGram = "rChunk: {<RB.?>*<VB.?><NNP><NN>?}"   # Any form of an adverb and we're looking for zero or 1 more of these
 
+            chunkParser = nltk.RegexpParser(chunkGram)
+            chunked = chunkParser.parse(tagged)
+
+            chunked.draw()
+
+            print(chunked)
+
+            # NNP singular proper noun
+            # NN Possible singular
+            # Regex: Any characters except for a new line
+            # question mark is zero or one
     except Exception as e:
         print(str(e))
-# Create tuples of each word and part of speech
 
-# After splitting by words, you then do tagging
-# Corporas are important
 
 process_content()
+
+#Chunk is extremely basic. It would group things possibly together and get very long
+
+# Chinking, removal of some things.
