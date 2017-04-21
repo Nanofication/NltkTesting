@@ -101,8 +101,58 @@ def process_content():
         print(str(e))
 
 
-process_content()
+# process_content()
 
 #Chunk is extremely basic. It would group things possibly together and get very long
 
 # Chinking, removal of some things.
+
+# def process_content_chinking():
+#     try:
+#         for i in tokenized[5:]:
+#             words = nltk.word_tokenize(i)
+#             tagged = nltk.pos_tag(words)
+#
+#             # Chinking = }{
+#             chunkGram = r"""Chunk: {<.*>+}
+#                         }<VB.?|IN|DT|TO>+{"""
+#
+#             chunkParser = nltk.RegexpParser(chunkGram)
+#             chunked = chunkParser.parse(tagged)
+#
+#             chunked.draw()
+#
+#             print(chunked)
+#
+#     except Exception as e:
+#         print(str(e))
+#
+# process_content_chinking()
+
+# Get comfortable with Regular Expressions. Regex
+
+# You can classify names together. Name entity recognitions sometimes. Can miss names
+
+# Named Entity Recognition ----------------------------------
+
+# United States is a named Entity
+
+def process_content():
+    try:
+        for i in tokenized[5:]:
+            words = nltk.word_tokenize(i)
+            tagged = nltk.pos_tag(words)
+
+            namedEnt = nltk.ne_chunk(tagged)
+
+            # White house is considered separate
+            # Binary True sees white house as one entity
+
+            # False positives and error rates are high for named entity recognition
+            # Recommend just look for nouns and then do something with it to create an entity
+
+            namedEnt.draw()
+    except Exception as e:
+        print(str(e))
+
+process_content()
