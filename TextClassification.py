@@ -4,9 +4,12 @@
 # This tutorial classifies if word is positive or negative.
 # Only for 2 categories and if it is tagged
 
+# Pickle is a a way to save python objects
+
 import nltk
 import random
 from nltk.corpus import movie_reviews # Training data
+import pickle
 
 documents = [(list(movie_reviews.words(fileid)), category)
              for category in movie_reviews.categories()
@@ -48,15 +51,27 @@ training_set = featuresets[:1900] #Keep separate to avoid bias
 testing_set = featuresets[1900:]
 
 # We don't tell the machine in testing set what category it is. Machine takes set and compares to known categories
-
 # Sometimes called "Stupid bayes" has a lot of flaws. Short algorithm that can be scaled
-
 # Baye's algorithm - Posterior = prior occurences x likelihood/ evidence
 
-classifier = nltk.NaiveBayesClassifier.train(training_set)
+"Old training code"
+# classifier = nltk.NaiveBayesClassifier.train(training_set)
+
+
+#Instead of training
+classifier_f = open("naivebayes.pickle", "rb")
+classifier = pickle.load(classifier_f)
+classifier_f.close()
 
 print("Naive Bayes Algo Accuracy: ", (nltk.classify.accuracy(classifier, testing_set)) * 100) # accuracy percentage
 classifier.show_most_informative_features(15)
 
 # None of these had grammar
 # Next time improve accuracy and reliability
+
+# First save classifier
+# save_classifier = open("naivebayes.pickle", "wb")
+# pickle.dump(classifier, save_classifier)
+# save_classifier.close()
+
+# Accuracy is unreliable. Algorithm's accuracy goes up and down everywhere. 
